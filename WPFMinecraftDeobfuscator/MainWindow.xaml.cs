@@ -317,11 +317,9 @@ namespace MinecraftDeobfuscator
             });
         }
 
-        private int DeobfuscateSteam(MemoryStream source, out MemoryStream output, ref int count) {
-            output = new MemoryStream();
-
+        private void DeobfuscateSteam(MemoryStream source, out MemoryStream output, ref int count) {
             source.Position = 0;
-            output.Position = 0;
+            output = new MemoryStream();
 
             long markPos = 0;
             BinaryTree<char, string>.Node currentNode = null;
@@ -347,8 +345,6 @@ namespace MinecraftDeobfuscator
 
             source.Position = 0;
             output.Position = 0;
-            return count;
-
         }
 
         public void LogF(string msg, params object[] args) => Log(string.Format(msg, args));
