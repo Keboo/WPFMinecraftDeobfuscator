@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-using System.IO.Compression;
 using System.Windows;
-using Microsoft.Win32;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace MinecraftDeobfuscator {
+namespace MinecraftDeobfuscator
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>

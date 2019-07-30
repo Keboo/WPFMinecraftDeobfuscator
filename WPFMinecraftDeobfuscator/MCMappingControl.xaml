@@ -5,10 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:MinecraftDeobfuscator"
-             xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Class="MinecraftDeobfuscator.MCMappingControl"
+             xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             x:Class="MinecraftDeobfuscator.MCMappingControl"
              mc:Ignorable="d" Height="25" Width="130">
     <UserControl.Resources>
-        <Style TargetType="{x:Type ComboBox}" x:Key="BaseButton">
+        <Style TargetType="{x:Type ComboBox}" x:Key="BaseButton" BasedOn="{StaticResource {x:Type ComboBox}}">
             <Setter Property="SelectedIndex" Value="{Binding SelectedIndex, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
             <Setter Property="IsEnabled" Value="True" />
             <Style.Triggers>
@@ -24,7 +26,7 @@
     <Grid Margin="0">
         <Button x:Name="SelectMapButton" Margin="0" Click="Button_Click">
             <Button.Style>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="Content" Value="{Binding MappingName}"/>
                     <Setter Property="ToolTip" Value="{Binding MappingName}"/>
                     <Style.Triggers>
@@ -45,7 +47,8 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Popup x:Name="PopUp" AllowsTransparency="True" IsOpen="{Binding PopUpOpen}" StaysOpen="False">
+        <Popup x:Name="PopUp" AllowsTransparency="True" IsOpen="{Binding PopUpOpen}" StaysOpen="False"
+               materialDesign:ThemeAssist.Theme="Light">
             <Popup.Style>
                 <Style TargetType="Popup">
                     <Style.Triggers>
@@ -55,66 +58,71 @@
                     </Style.Triggers>
                 </Style>
             </Popup.Style>
-            <Grid x:Name="Grid" Background="#FFE5E5E5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <Label Content="MC Version" Margin="0" HorizontalContentAlignment="Center"/>
-                <ComboBox x:Name="MCVersionDropDown" Margin="2,0,2.5,2" Grid.Row="1" Height="26" VerticalContentAlignment="Center" SelectionChanged="MCVersionDropDown_SelectionChanged">
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseButton}"/>
-                    </ComboBox.Style>
-                </ComboBox>
-                <ComboBox x:Name="TypeDropDown" Margin="2.5,0,2.5,2" Grid.Row="1" Grid.Column="1" Height="26" VerticalContentAlignment="Center" SelectionChanged="TypeDropDown_SelectionChanged">
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseButton}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Source={x:Reference Name=MCVersionDropDown}, Path=SelectedIndex}" Value="-1">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="SelectedIndex" Value="-1"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.SemiLive}">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="SelectedIndex" Value="-1"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.Custom}">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="SelectedIndex" Value="-1"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
-                </ComboBox>
-                <ComboBox x:Name="SnapshotDropDown" Margin="2.5,0,2.5,2" Grid.Row="1" Grid.Column="2" Height="26" VerticalContentAlignment="Center" SelectionChanged="SnapshotDropDown_SelectionChanged">
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseButton}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.SemiLive}">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="SelectedIndex" Value="-1"/>
-                                    <Setter Property="ItemsSource" Value="{x:Null}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.Custom}">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                    <Setter Property="SelectedIndex" Value="-1"/>
-                                    <Setter Property="ItemsSource" Value="{x:Null}"/>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ItemsSource}" Value="{x:Null}">
-                                    <Setter Property="IsEnabled" Value="False"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ComboBox.Style>
-                </ComboBox>
-                <Label Content="Type" HorizontalContentAlignment="Center" Grid.Column="1"/>
-                <Label Content="Snapshot" HorizontalContentAlignment="Center" Grid.Column="2"/>
-            </Grid>
+            <Border BorderBrush="{DynamicResource PrimaryHueDarkBrush}" BorderThickness="1" 
+                    CornerRadius="5" Padding="10"
+                    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+                    Background="{DynamicResource MaterialDesignPaper}">
+                <Grid x:Name="Grid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="MC Version" Margin="0" HorizontalContentAlignment="Center"/>
+                    <ComboBox x:Name="MCVersionDropDown" Margin="2,0,2.5,2" Grid.Row="1" Height="26" VerticalContentAlignment="Center" SelectionChanged="MCVersionDropDown_SelectionChanged">
+                        <ComboBox.Style>
+                            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseButton}"/>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <ComboBox x:Name="TypeDropDown" Margin="2.5,0,2.5,2" Grid.Row="1" Grid.Column="1" Height="26" VerticalContentAlignment="Center" SelectionChanged="TypeDropDown_SelectionChanged">
+                        <ComboBox.Style>
+                            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Source={x:Reference Name=MCVersionDropDown}, Path=SelectedIndex}" Value="-1">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="SelectedIndex" Value="-1"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.SemiLive}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="SelectedIndex" Value="-1"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.Custom}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="SelectedIndex" Value="-1"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <ComboBox x:Name="SnapshotDropDown" Margin="2.5,0,2.5,2" Grid.Row="1" Grid.Column="2" Height="26" VerticalContentAlignment="Center" SelectionChanged="SnapshotDropDown_SelectionChanged">
+                        <ComboBox.Style>
+                            <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource BaseButton}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.SemiLive}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="SelectedIndex" Value="-1"/>
+                                        <Setter Property="ItemsSource" Value="{x:Null}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Mapping}" Value="{x:Static local:MCMapping.Custom}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="SelectedIndex" Value="-1"/>
+                                        <Setter Property="ItemsSource" Value="{x:Null}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=Self}, Path=ItemsSource}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <Label Content="Type" HorizontalContentAlignment="Center" Grid.Column="1"/>
+                    <Label Content="Snapshot" HorizontalContentAlignment="Center" Grid.Column="2"/>
+                </Grid>
+            </Border>
         </Popup>
 
     </Grid>
